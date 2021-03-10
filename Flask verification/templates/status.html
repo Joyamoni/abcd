@@ -1,0 +1,267 @@
+
+
+<div class="full_screen">
+
+	<div class="left_input">
+		<div class="input_container">
+			<h3 class="moto">Verify Limitless</h3>
+			<input type="text" name="email" class="in_box" value="{{email}}">
+			<button id="butt">Verify</button>
+		</div>
+	</div>		
+	
+	<div class="right_result">
+		<div class="result_container">
+			<div class="result_elements">Syntax: <strong class="format"></strong></div>			
+			<div class="result_elements">SMTP Server :<strong class="smtp"></strong></div>
+			<div class="result_elements">Disposability: <strong class="disposable"></strong></div>
+			<div class="result_elements">Mail Existance: <strong class="user"></strong></div>
+			<div class="result_elements">Role Mail <strong class="role"></strong></div>
+			<div class="result_elements">Accept All Server: <strong class="acceptall"></strong></div>
+			<div class="result_elements">Freemail: <strong class="free"></strong></div>
+		</div>
+	</div>
+</div>
+
+
+<style type="text/css">
+	#butt{
+    height: 46px;
+    width: 125;
+    float: center;
+    font-size: 25;
+    font-family: ;
+    background-color: #eee8aa;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    color: slategrey;
+    border: none;
+    margin: 0;
+    padding: 0px;
+    float: right;
+	}
+	.role{
+		background-color: {{black}};
+		border-radius: 10%;
+		font-weight: normal;
+	}
+	.free{
+		background-color: #d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+	}
+	.user{
+		background-color: #d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+	}
+	.acceptall{
+		background-color: #d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+
+	}
+	.disposable{
+		background-color: #d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+
+	}
+	.smtp{
+		background-color:#d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+	}
+	.format{
+		background-color:#d8d8d8;
+		border-radius: 10%;
+		font-weight: normal;
+	}
+	.result_elements{
+	    font-size: 35px;
+	    font-family: times new roman;
+	    font-weight: 700;
+	    color: teal;
+
+	}
+	.moto {
+	    color: grey;
+	    font-size: 50px;
+	    padding: 0;
+	}
+
+	.in_box {
+	    font-family: times new roman;
+	    margin: 0 0 0 0;
+	    height: 46px;
+	    border: 2px solid #eee8aa;
+	    font-size: 25px;
+	    font-weight: 500;
+	    padding: 0px;
+	}
+	.input_container{
+
+		margin: auto;
+	}
+	.menu_element{
+		width:20%;
+		float:left;
+		text-align: -webkit-center;
+	    color: brown;
+
+	}
+	.menu{
+		background-color: #0000ff12;
+		font-size: 35px;
+		height: 10%;
+		align-items: center;
+		display: flex;
+
+	}
+	.full_screen{
+		align-items: center;
+	    display: flex;
+	    height: 100%;
+	    position: relative;
+	}
+	.left_input{
+
+		float:left;
+		background-color: #8080800f;
+		width: 50%;
+		height: 100%;
+		color: gray;
+		align-items: center;
+	    display: flex;
+	    position: relative;
+
+	}
+	.right_result{
+		float: right;
+		background-color: #ffe60033;
+		width: 50%;
+		height: 100%;
+		align-items: center;
+	    display: flex;
+	    position: relative;
+	    margin: auto;
+	}
+	.result_container{
+		margin: auto;
+	}
+	body{
+		display: block;
+		margin: 0px;
+}                         
+</style>
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$("#butt").click(function(){
+		$(this).text("Verifying");
+		$(".disposable").text("Verifying");
+		$(".smtp").text("Verifying");
+		$(".user").text("Verifying");
+		$(".acceptall").text("Verifying");
+		$(".format").text("Verifying");
+		$(".role").text("Verifying");
+		$.ajax({
+			url:"/disposable",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(q){
+				$(".disposable").text(q.disposable_stat);
+				$(".disposable").css({"background-color":q.color});
+				$("#butt").text("Verified");
+			},
+		});
+		$.ajax({
+			url:"/smtp",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(r){
+				$(".smtp").text(r.smtp_status);
+				$(".smtp").css({"background-color":r.color})
+			}
+		});
+
+		$.ajax({
+			url:"/existance",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(s){
+				$(".user").text(s.user_stat);
+				$(".user").css({"background-color":s.color})
+			}
+		});
+
+		$.ajax({
+			url:"/acceptall",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"				
+			},
+			type:"GET",
+			success:function(t){
+				$(".acceptall").text(t.acceptall_stat);
+				$(".acceptall").css({"background-color":t.color})
+			}
+		});
+
+		$.ajax({
+			url:"/syntax",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(u){
+				$(".format").text(u.syntax_stat);
+				$(".format").css({"background-color":u.color})
+			}
+		});
+
+		$.ajax({
+			url:"/role",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(v){
+				$(".role").text(v.role_stat);
+				$(".role").css({"background-color":v.color})
+			}
+		});
+		$.ajax({
+			url:"/free",
+			data:{
+				target_email:$(".in_box").val(),
+				greet:"hello"
+			},
+			type:"GET",
+			success:function(w){
+				$(".free").text(w.free_stat)
+				$(".free").css({"background-color":w.color})
+			}
+		});
+	});
+});
+
+
+
+</script>
